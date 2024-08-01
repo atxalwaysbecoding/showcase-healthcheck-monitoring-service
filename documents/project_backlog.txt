@@ -1,5 +1,17 @@
 Todo:
+-Define a healthCheck configuration
+-Expose healthCheck configuration APIs
+-Define a monitoring run
+-Define a monitoring run manager
+-Expose start / stop monitoring run manager APIs
+-Define healthCheck history
+-Expose get healthCheck history APIs
+-Define an alert
+-Expose a get all active alerts API
+-Expose a get all alerts API (for a given time period)
 
 Other:
+-persist to a DB healthCheck configurations, alerts, and healthCheck history
+-institute periodic healthCheck history records cleanup (configurable)
 
 Bugs/concerns:
