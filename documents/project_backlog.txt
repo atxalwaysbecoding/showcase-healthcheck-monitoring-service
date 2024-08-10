@@ -1,7 +1,8 @@
 Todo:
--Define a healthCheck manager
--Define a healthCheck
--Expose healthCheck configuration APIs (CRUD APIs)
+Done -Define a healthCheck manager
+Done -Define a healthCheck
+Done -Expose healthCheck configuration APIs (CRUD APIs)
+-HealthCheck hardening (entity timestamps, active/inactive flag, alert threshold config, etc.)
 -Define a run manager
 -Define a run result
 -Expose start / stop run manager APIs
@@ -14,5 +15,7 @@ Todo:
 Other:
 -persist to a DB healthCheck configurations, alerts, and healthCheck history
 -institute periodic healthCheck run results cleanup (configurable)
+
+Done -Add basic exception handling (not the focus of this project)
 
 Bugs/concerns:
