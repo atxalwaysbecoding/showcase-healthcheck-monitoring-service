@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +44,11 @@ public class HealthCheckManagerImpl implements HealthCheckManager {
         }
         //todo - throw exception
         return false;
+    }
+
+    @Override
+    public List<HealthCheckEntity> getAllHealthCheckByStatus(boolean isActive) {
+        return this.healthCheckRepository.findByActiveTrue(isActive);
     }
 
     private void validateHealthCheckEntityForSave(HealthCheckEntity healthCheckEntity){

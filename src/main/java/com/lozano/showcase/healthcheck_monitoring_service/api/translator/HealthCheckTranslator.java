@@ -25,6 +25,7 @@ public class HealthCheckTranslator extends Translator <HealthCheck, HealthCheckE
         HealthCheck healthCheck = new HealthCheck();
         healthCheck.setId(domain.getId());
         healthCheck.setUrl(domain.getUrl());
+        healthCheck.setActive(domain.isActive());
 
         Set<HealthCheckParam> healthCheckParamSet = new HashSet<>();
         for (HealthCheckParamEntity healthCheckParamEntity : domain.getParams()){
@@ -40,6 +41,7 @@ public class HealthCheckTranslator extends Translator <HealthCheck, HealthCheckE
         HealthCheckEntity healthCheckEntity = new HealthCheckEntity();
         healthCheckEntity.setId(api.getId());
         healthCheckEntity.setUrl(api.getUrl());
+        healthCheckEntity.setActive(api.isActive());
 
         Set<HealthCheckParamEntity> healthCheckParamEntities = new HashSet<>();
         for (HealthCheckParam healthCheckParam : api.getParams()){

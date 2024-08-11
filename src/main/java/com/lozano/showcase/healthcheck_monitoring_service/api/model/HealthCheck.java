@@ -11,5 +11,7 @@ public class HealthCheck {
 
     private String url;
 
+    private boolean active;
+
     private Set<HealthCheckParam> params;
 }

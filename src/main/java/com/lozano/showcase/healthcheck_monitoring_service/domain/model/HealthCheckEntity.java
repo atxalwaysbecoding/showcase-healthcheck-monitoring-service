@@ -19,6 +19,9 @@ public class HealthCheckEntity implements Serializable {
     @Column(name = "HEALTHCHECK_URL")
     private String url;
 
+    @Column(name = "ACTIVE")
+    private boolean active;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "HEALTHCHECK_ID", referencedColumnName = "HEALTHCHECK_ID")
     private Set<HealthCheckParamEntity> params;
