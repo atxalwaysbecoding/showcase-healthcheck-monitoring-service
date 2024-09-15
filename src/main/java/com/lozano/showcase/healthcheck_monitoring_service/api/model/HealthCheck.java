@@ -13,5 +13,9 @@ public class HealthCheck {
 
     private boolean active;
 
-    private Set<HealthCheckParam> params;
+    private HealthCheckHttpMethod httpMethod;
+
+    private Set<KeyValuePair> params;
+
+    private Set<KeyValuePair> headers;
 }

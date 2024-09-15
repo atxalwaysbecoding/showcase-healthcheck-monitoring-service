@@ -2,11 +2,12 @@ Todo:
 Done -Define a healthCheck manager
 Done -Define a healthCheck
 Done -Expose healthCheck configuration APIs (CRUD APIs)
+Done -Add HealthCheck headers and params
 -Further HealthCheck entity definition (entity timestamps, active/inactive flag, alert threshold config, etc.)
 -HealthCheck Manager hardening
--Define a run manager
+Done -Define a run manager
 -Define a run result
--Expose start / stop run manager APIs
+Done -Expose start / stop run manager APIs
 -Expose a get healthCheck run history API
 -Define an alert manager
 -Define an alert

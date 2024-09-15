@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -22,8 +24,23 @@ public class HealthCheckEntity implements Serializable {
     @Column(name = "ACTIVE")
     private boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "HTTP_METHOD")
+    private String httpMethod;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "HEALTHCHECK_ID", referencedColumnName = "HEALTHCHECK_ID")
     private Set<HealthCheckParamEntity> params;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "HEALTHCHECK_ID", referencedColumnName = "HEALTHCHECK_ID")
+    private Set<HealthCheckHeaderEntity> headers;
+
+    @Transient
+    public Map<String, String> convertParamEntityToURLParams(){
+        Map<String, String> params = new HashMap<>();
+        for (HealthCheckParamEntity healthCheckParamEntity : this.getParams()){
+            params.put(healthCheckParamEntity.getParamName(), healthCheckParamEntity.getParamValue());
+        }
+        return params;
+    }
 }

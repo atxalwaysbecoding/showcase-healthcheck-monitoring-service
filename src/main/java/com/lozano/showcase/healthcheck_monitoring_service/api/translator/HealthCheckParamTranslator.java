@@ -1,29 +1,29 @@
 package com.lozano.showcase.healthcheck_monitoring_service.api.translator;
 
-import com.lozano.showcase.healthcheck_monitoring_service.api.model.HealthCheckParam;
+import com.lozano.showcase.healthcheck_monitoring_service.api.model.KeyValuePair;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.model.HealthCheckParamEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HealthCheckParamTranslator extends Translator <HealthCheckParam, HealthCheckParamEntity>{
+public class HealthCheckParamTranslator extends Translator <KeyValuePair, HealthCheckParamEntity>{
 
     @Override
-    public HealthCheckParam toApiModel(HealthCheckParamEntity domain) {
+    public KeyValuePair toApiModel(HealthCheckParamEntity domain) {
 
-        HealthCheckParam healthCheckParam = new HealthCheckParam();
-        healthCheckParam.setParamID(domain.getParamID());
-        healthCheckParam.setParamName(domain.getParamName());
-        healthCheckParam.setParamValue(domain.getParamValue());
-        return healthCheckParam;
+        KeyValuePair keyValuePair = new KeyValuePair();
+        keyValuePair.setId(domain.getParamID());
+        keyValuePair.setKey(domain.getParamName());
+        keyValuePair.setValue(domain.getParamValue());
+        return keyValuePair;
     }
 
     @Override
-    public HealthCheckParamEntity toDomainModel(HealthCheckParam api) {
+    public HealthCheckParamEntity toDomainModel(KeyValuePair api) {
 
         HealthCheckParamEntity healthCheckParamEntity = new HealthCheckParamEntity();
-        healthCheckParamEntity.setParamID(api.getParamID());
-        healthCheckParamEntity.setParamName(api.getParamName());
-        healthCheckParamEntity.setParamValue(api.getParamValue());
+        healthCheckParamEntity.setParamID(api.getId());
+        healthCheckParamEntity.setParamName(api.getKey());
+        healthCheckParamEntity.setParamValue(api.getValue());
         return healthCheckParamEntity;
     }
 }

@@ -26,6 +26,8 @@ public class HealthCheckManagerImpl implements HealthCheckManager {
 
     @Override
     public HealthCheckEntity createHealthCheck(HealthCheckEntity healthCheckEntity) {
+        //todo - not sure I want this permanently, but certainly helpful for testing
+        healthCheckEntity.setActive(true);
         return this.healthCheckRepository.save(healthCheckEntity);
     }
 
