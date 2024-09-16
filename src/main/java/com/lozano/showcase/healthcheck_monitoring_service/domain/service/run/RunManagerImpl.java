@@ -2,10 +2,13 @@ package com.lozano.showcase.healthcheck_monitoring_service.domain.service.run;
 
 import com.lozano.showcase.healthcheck_monitoring_service.api.model.RunStateEnum;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.model.HealthCheckEntity;
+import com.lozano.showcase.healthcheck_monitoring_service.domain.model.HealthCheckRunResponse;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.service.client.HealthCheckClient;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.service.healthcheck.HealthCheckManager;
+import com.lozano.showcase.healthcheck_monitoring_service.domain.service.runresult.RunResultManager;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +19,13 @@ public class RunManagerImpl implements RunManager{
     private HealthCheckClient healthCheckClient;
     private HealthCheckManager healthCheckManager;
     private RunStateEnum runState;
+    private RunResultManager runResultManager;
 
     @Autowired
-    public RunManagerImpl(HealthCheckClient healthCheckClient, HealthCheckManager healthCheckManager) {
+    public RunManagerImpl(HealthCheckClient healthCheckClient, HealthCheckManager healthCheckManager, RunResultManager runResultManager) {
         this.healthCheckClient = healthCheckClient;
         this.healthCheckManager = healthCheckManager;
+        this.runResultManager = runResultManager;
         this.runState = RunStateEnum.RUNNING;
     }
 
@@ -50,7 +55,11 @@ public class RunManagerImpl implements RunManager{
             log.info("Run manager run started...");
             for (HealthCheckEntity healthCheck : this.healthCheckManager.getAllHealthCheckByStatus(true)){
                 log.info("Simulating run for HealthCheck ID {}", healthCheck.getId());
-                this.healthCheckClient.executeHttpRequestAndGetResponse(healthCheck);
+
+                HealthCheckRunResponse runResponse = this.healthCheckClient.executeHttpRequestAndGetResponse(healthCheck);
+
+                this.runResultManager.logRunResult(runResponse);
+
             }
         } else {
             log.warn("Run manager at stopped state - not running active HealthChecks.");
