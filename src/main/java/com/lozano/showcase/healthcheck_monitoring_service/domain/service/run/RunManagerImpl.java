@@ -3,6 +3,7 @@ package com.lozano.showcase.healthcheck_monitoring_service.domain.service.run;
 import com.lozano.showcase.healthcheck_monitoring_service.api.model.RunStateEnum;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.model.HealthCheckEntity;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.model.HealthCheckRunResponse;
+import com.lozano.showcase.healthcheck_monitoring_service.domain.model.RunResultHealth;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.service.client.HealthCheckClient;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.service.healthcheck.HealthCheckManager;
 import com.lozano.showcase.healthcheck_monitoring_service.domain.service.runresult.RunResultManager;
@@ -57,6 +58,8 @@ public class RunManagerImpl implements RunManager{
                 log.info("Simulating run for HealthCheck ID {}", healthCheck.getId());
 
                 HealthCheckRunResponse runResponse = this.healthCheckClient.executeHttpRequestAndGetResponse(healthCheck);
+                //todo: mark/decide RunResultHealth
+                runResponse.setHealth(RunResultHealth.HEALTHY);
 
                 this.runResultManager.logRunResult(runResponse);
 

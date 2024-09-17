@@ -17,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,20 +57,28 @@ public class HealthCheckRestTemplateClient implements HealthCheckClient {
         }
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-
+        LocalDateTime startDateTime = LocalDateTime.now();
         try {
 
             response = this.restTemplate.exchange(builder.toUriString(), HttpMethod.valueOf(healthCheckEntity.getHttpMethod()), requestEntity, String.class);
 
         } catch (HttpClientErrorException ex){
             log.debug("HealthCheckRestTemplateClient.HttpClientErrorException for HC ID: '{}' - ex message: '{}'", healthCheckEntity.getId(), ex.getMessage());
-            return new HealthCheckRunResponse(healthCheckEntity.getId(), builder.toUriString(), ex.getStatusCode().value(), ex.getResponseBodyAsString(), ex.getMessage());
+
+            LocalDateTime endDateTime = LocalDateTime.now();
+            long duration = ChronoUnit.NANOS.between(startDateTime, endDateTime);
+            return new HealthCheckRunResponse(healthCheckEntity.getId(), builder.toUriString(), ex.getStatusCode().value(), ex.getResponseBodyAsString(), ex.getMessage(), startDateTime, duration, null);
         } catch (Exception e){
             log.debug("HealthCheckRestTemplateClient.Exception for HC ID: '{}' - ex message: '{}'", healthCheckEntity.getId(), e.getMessage());
-            return new HealthCheckRunResponse(healthCheckEntity.getId(), builder.toUriString(), null, null, e.getMessage());
+
+            LocalDateTime endDateTime = LocalDateTime.now();
+            long duration = ChronoUnit.NANOS.between(startDateTime, endDateTime);
+            return new HealthCheckRunResponse(healthCheckEntity.getId(), builder.toUriString(), null, null, e.getMessage(), startDateTime, duration, null);
         }
 
-        return new HealthCheckRunResponse(healthCheckEntity.getId(), builder.toUriString(), response.getStatusCode().value(), response.getBody(), null);
+        LocalDateTime endDateTime = LocalDateTime.now();
+        long duration = ChronoUnit.NANOS.between(startDateTime, endDateTime);
+        return new HealthCheckRunResponse(healthCheckEntity.getId(), builder.toUriString(), response.getStatusCode().value(), response.getBody(), null, startDateTime, duration, null);
 
     }
 

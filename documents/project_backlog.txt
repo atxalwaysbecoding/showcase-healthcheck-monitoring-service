@@ -4,15 +4,17 @@ Done -Define a healthCheck
 Done -Expose healthCheck configuration APIs (CRUD APIs)
 Done -Add HealthCheck headers and params
 -Further HealthCheck entity definition (entity timestamps, active/inactive flag, alert threshold config, etc.)
+Done - Add duration to run result
 -HealthCheck Manager hardening
 Done -Define a run manager
--Define a run result
+Done - Define a run result
 Done -Expose start / stop run manager APIs
--Expose a get healthCheck run history API
+Done -Expose a get healthCheck run history API
 -Define an alert manager
 -Define an alert
 -Expose a get all active alerts API
 -Expose a get latest run results API
+-Order getAllRunResultsAPI by startDateTime
 
 Other:
 -persist to a DB healthCheck configurations, alerts, and healthCheck history
